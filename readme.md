@@ -5,8 +5,8 @@ This repository is meant to show how you can use the Reactive Extensions for Jav
 
 Included are:
 
-- Require.JS
-- Time Flies Like An Arrow
+- [Require.JS](http://reactive-extensions.github.com/RxJS-Examples/requirejs/require-example.html)
+- [Time Flies Like An Arrow](http://reactive-extensions.github.com/RxJS-Examples/timeflies/timeflies.html)
 
 ## LICENSE ##
 **Copyright 2011 Microsoft Corporation**
