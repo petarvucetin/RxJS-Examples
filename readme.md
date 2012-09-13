@@ -6,6 +6,7 @@ This repository is meant to show how you can use the Reactive Extensions for Jav
 Included are:
 
 - Require.JS
+- Time Flies Like An Arrow
 
 ## LICENSE ##
 **Copyright 2011 Microsoft Corporation**
