@@ -12,12 +12,14 @@ require(['rx', 'rx.html', 'rx.binding', 'rx.time'], function (Rx) {
         coords.innerHTML = e.clientX + ',' + e.clientY;
     });
 
+    // Calculate deltas between two mouse movements
     var d2 = mousemove.zip(mousemove.skip(1), function (l, r) {
         return { clientX: r.clientX - l.clientX, clientY: r.clientY - l.clientY };
     }).subscribe(function (e) {
         delta.innerHTML = e.clientX + ',' + e.clientY;
     });
 
+    // Get the last 500ms worth of mouse moves or 10, whichever comes first
     var d3 = mousemove.bufferWithTimeOrCount(500, 10).subscribe(function (e) {
         while(buffer.firstChild) {
             buffer.removeChild(buffer.firstChild);
