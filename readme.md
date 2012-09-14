@@ -7,6 +7,7 @@ Included are:
 
 - [Require.JS](http://reactive-extensions.github.com/RxJS-Examples/requirejs/require-example.html)
 - [Time Flies Like An Arrow](http://reactive-extensions.github.com/RxJS-Examples/timeflies/timeflies.html)
+- [Canvas Painting](http://reactive-extensions.github.com/RxJS-Examples/canvaspaint/canvaspaint.html)
 
 ## LICENSE ##
 **Copyright 2011 Microsoft Corporation**
