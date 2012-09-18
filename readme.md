@@ -10,6 +10,8 @@ Included are:
 - [Konami Code](http://reactive-extensions.github.com/RxJS-Examples/canvaspaint/canvaspaint.html)
 - [Require.JS](http://reactive-extensions.github.com/RxJS-Examples/requirejs/require-example.html)
 - [Time Flies Like An Arrow](http://reactive-extensions.github.com/RxJS-Examples/timeflies/timeflies.html)
+- Testing
+ - [QUnit](http://reactive-extensions.github.com/RxJS-Examples/testing/qunit/tests.html)
 
 
 ## LICENSE ##
