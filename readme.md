@@ -11,6 +11,7 @@ Included are:
 - [Require.JS](http://reactive-extensions.github.com/RxJS-Examples/requirejs/require-example.html)
 - [Time Flies Like An Arrow](http://reactive-extensions.github.com/RxJS-Examples/timeflies/timeflies.html)
 - Testing
+ - Node.js with Mocha
  - [QUnit](http://reactive-extensions.github.com/RxJS-Examples/testing/qunit/tests.html)
 
 
