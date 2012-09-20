@@ -1,15 +1,13 @@
 (function (global) {
 
-    var overlay,
+    var // a model for the region of the image about to be cropped
+        boundingBox,
+        // an array of draggable elements that modify the crop region
+        handles = [],
+        // `overlay` is a canvas element that allows us to darken the portion  of the image that will be removed.
+        overlay,
         // `ctx` will be the drawing context for `overlay`
         ctx;
-
-    var reqAnimFrame = window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (action) { window.setTimeout(action, 1000 / 60); };
 
     function loadImage () {
         var // `buffer` is a canvas element that displays the actual image to crop
@@ -19,6 +17,7 @@
 
         img.src = 'images/leaf twirl.jpg';
 
+        // Returns an observable which fires when the image is loaded
         return Rx.Observable.fromEvent(img, 'load').select(function () {
             overlay.width = img.width;
             overlay.height = img.height;
@@ -35,18 +34,16 @@
     } 
 
     function initBoundingBox(size) {
-        var boundingBox = {
+        boundingBox = {
             x: 0,
             y: 0,
             x2: size.width,
             y2: size.height
         };
-        return boundingBox;
     }
 
-    function createHandles (boundingBox) {
-        var container = document.getElementById('container'),
-            handles = [];
+    function createHandles () {
+        var container = document.getElementById('container');
 
         function createHandle (id, render, updateModel) {
             var handle = document.createElement('div');
@@ -99,19 +96,21 @@
         });
 
         // render the handles in their initial positiions
-        handles.forEach(function (element) { element['render'](); });        
-        return handles;
+        handles.forEach(function (element) { element['render'](); });
     }
 
-    function respondToGestures(handles) {
+    function respondToGestures() {
         var fromEvent = Rx.Observable.fromEvent;
 
         var moves = fromEvent(overlay, 'mousemove'),
             up = fromEvent(document, 'mouseup');
 
         // When the mouse is down on a handle, return the handle element
-        var events = fromEvent(handles, 'mousedown')
+        return fromEvent(handles, 'mousedown')
             .selectMany(function (handle) {
+
+                handle.preventDefault();
+
                 return moves
                     // We combine the handle element with the position data from the move event
                     .select(function (pos) {
@@ -124,13 +123,9 @@
                     // However, when the mouse is up (anywhere on the document) then stop the stream
                     .takeUntil(up);
             });
-
-        return events.doAction(function (data) {
-            data.element.updateModel(data.offsetX, data.offsetY);
-        });
     }
 
-    function drawOverlay(boundingBox, handles, ctx) {
+    function drawOverlay() {
         var x = boundingBox.x,
             y = boundingBox.y,
             w = boundingBox.x2 - boundingBox.x,
@@ -152,21 +147,24 @@
     }    
 
     function main () {
-        overlay = document.getElementById('overlay');
+        overlay = document.querySelector('#overlay');
         ctx = overlay.getContext('2d');
 
         var subscription = loadImage()
             .selectMany(function (size) {
-                var boundingBox = initBoundingBox(size),
-                    handles = createHandles(boundingBox);
 
-                return respondToGestures(handles).select(function (offset) {
-                    return { boundingBox: boundingBox, handles: handles };
-                });
+                // Initialize after load
+                initBoundingBox(size),
+                createHandles();
+
+                return respondToGestures();
             })
+            .observeOn(Rx.Scheduler.timeout) // Shift to requestAnimationFrame, setImmediate, or setTimeout
             .subscribe(function (data) {
-                var boundDrawOverlay = drawOverlay.bind(null, data.boundingBox, data.handles, ctx);
-                reqAnimFrame(boundDrawOverlay);
+
+                // Update model and redraw via an async operation
+                data.element.updateModel(data.offsetX, data.offsetY);
+                drawOverlay();
             });
     }
 

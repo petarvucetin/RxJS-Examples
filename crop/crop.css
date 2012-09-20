@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.canvasoverlays {
+    position: absolute;
+}
+
 .handle {
     position: absolute;
     width: 20px;
