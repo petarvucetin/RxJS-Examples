@@ -9,6 +9,16 @@
         // `ctx` will be the drawing context for `overlay`
         ctx;
 
+    var reqAnimationFrame = 
+        global.requestAnimationFrame       || 
+        global.webkitRequestAnimationFrame || 
+        global.mozRequestAnimationFrame    || 
+        global.oRequestAnimationFrame      || 
+        global.msRequestAnimationFrame     || 
+        function (action) {
+            global.setTimeout(action, 1000 / 60);
+        };   
+
     function loadImage () {
         var // `buffer` is a canvas element that displays the actual image to crop
             buffer = document.querySelector('#buffer'),
@@ -159,12 +169,11 @@
 
                 return respondToGestures();
             })
-            .observeOn(Rx.Scheduler.timeout) // Shift to requestAnimationFrame, setImmediate, or setTimeout
             .subscribe(function (data) {
 
                 // Update model and redraw via an async operation
                 data.element.updateModel(data.offsetX, data.offsetY);
-                drawOverlay();
+                reqAnimationFrame(drawOverlay);
             });
     }
 
