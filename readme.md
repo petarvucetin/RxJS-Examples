@@ -9,7 +9,7 @@ Included are:
 - [Canvas Painting](http://reactive-extensions.github.com/RxJS-Examples/canvaspaint/canvaspaint.html)
 - [Drag and Drop](http://reactive-extensions.github.com/RxJS-Examples/dragndrop/dragndrop.html)
 - [Image Cropper](http://reactive-extensions.github.com/RxJS-Examples/crop/crop.html)
-- [Konami Code](http://reactive-extensions.github.com/RxJS-Examples/canvaspaint/canvaspaint.html)
+- [Konami Code](http://reactive-extensions.github.com/RxJS-Examples/konamicode/konamicode.html)
 - [Require.JS](http://reactive-extensions.github.com/RxJS-Examples/requirejs/require-example.html)
 - [Time Flies Like An Arrow](http://reactive-extensions.github.com/RxJS-Examples/timeflies/timeflies.html)
 - Testing
